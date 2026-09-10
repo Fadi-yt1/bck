@@ -806,7 +806,13 @@
       state.config = { ...state.config, ...config };
 
       if (!config.ready) {
-        showNotice("Background removal is temporarily unavailable — the service isn't configured.");
+        const missing = Array.isArray(config.missing) ? config.missing.filter(Boolean) : [];
+        showNotice(
+          missing.length
+            ? `Background removal is unavailable: the server is missing ${missing.join(" and ")}. ` +
+              "Add it in Netlify → Project configuration → Environment variables (scope: Functions), then redeploy."
+            : "Background removal is temporarily unavailable — the service isn't configured.",
+        );
       } else if (config.mode === "sandbox") {
         showNotice("Sandbox mode: results are watermarked test images and no credits are used.");
       }

@@ -3,21 +3,38 @@ import type { Config } from "@netlify/functions";
 /**
  * Public, non-sensitive configuration for the front end.
  *
- * This deliberately reports only whether a key is present and which mode is
- * active — never the key itself, not even a partial or masked version.
+ * This reports only whether a key is present, which mode is active, and the
+ * NAMES of any variables that are missing — never a key itself, not even a
+ * partial or masked version. The names are already public (they're in the
+ * README), and reporting them turns a misconfiguration into a one-line
+ * diagnosis instead of a guess.
  */
 export default async (): Promise<Response> => {
   const mode = (Netlify.env.get("PHOTOROOM_MODE") ?? "live").toLowerCase();
-  const configured = Boolean(
-    mode === "sandbox"
-      ? Netlify.env.get("PHOTOROOM_SANDBOX_API_KEY") ?? Netlify.env.get("PHOTOROOM_API_KEY")
-      : Netlify.env.get("PHOTOROOM_API_KEY"),
-  );
+  const sandbox = mode === "sandbox";
+
+  const liveKey = Netlify.env.get("PHOTOROOM_API_KEY");
+  const sandboxKey = Netlify.env.get("PHOTOROOM_SANDBOX_API_KEY");
+  const activeKey = sandbox ? sandboxKey ?? liveKey : liveKey;
+
+  const missing: string[] = [];
+  if (!activeKey) {
+    missing.push(sandbox ? "PHOTOROOM_SANDBOX_API_KEY" : "PHOTOROOM_API_KEY");
+  }
+
+  // Optional variables — the function has working defaults for each, so these
+  // are reported as advisory rather than blocking.
+  const usingDefaults: string[] = [];
+  if (!Netlify.env.get("RATE_LIMIT_SALT")) usingDefaults.push("RATE_LIMIT_SALT");
+  if (!Netlify.env.get("RATE_LIMIT_PER_HOUR")) usingDefaults.push("RATE_LIMIT_PER_HOUR");
+  if (!Netlify.env.get("PHOTOROOM_MODE")) usingDefaults.push("PHOTOROOM_MODE");
 
   return new Response(
     JSON.stringify({
-      ready: configured,
-      mode: mode === "sandbox" ? "sandbox" : "live",
+      ready: Boolean(activeKey),
+      mode: sandbox ? "sandbox" : "live",
+      missing,
+      usingDefaults,
       maxUploadBytes: 15 * 1024 * 1024,
       rateLimitPerHour: Number(Netlify.env.get("RATE_LIMIT_PER_HOUR") ?? 40),
     }),

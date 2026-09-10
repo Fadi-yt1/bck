@@ -44,8 +44,15 @@ After the first deploy, confirm the credentials are wired up by opening
 {"ready":true,"mode":"live","maxUploadBytes":15728640,"rateLimitPerHour":40}
 ```
 
-`ready:false` means the function can't see `PHOTOROOM_API_KEY` — check that the
-variable is scoped to **Functions** in the Netlify UI.
+If `ready` is `false`, the `missing` array names exactly which variable the
+function can't see, and the app shows the same thing on screen. Add it under
+*Project configuration → Environment variables*, tick **Contains secret values**,
+scope it to **Functions**, and redeploy.
+
+Note: variables added through the Netlify MCP tooling with the "secret" flag are
+silently dropped — the call reports success and writes nothing. Set secret
+values through the Netlify UI or the CLI instead, and verify they appear in the
+variable list afterwards.
 
 Note: if the Netlify team requires SSO login for all projects, the site stays
 private to the team until that is changed for this project.
