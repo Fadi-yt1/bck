@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Netlify
+.netlify/
+
+# Environment / secrets — never commit real keys
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/

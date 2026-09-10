@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clearcut — Remove image backgrounds in seconds</title>
+<meta name="description" content="Drop in a photo and get a clean, transparent cutout in seconds. Swap in any colour or backdrop, then download as PNG or JPG. No sign-up required.">
+<meta name="theme-color" content="#0c0e16">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<meta property="og:title" content="Clearcut — Remove image backgrounds in seconds">
+<meta property="og:description" content="Drop in a photo and get a clean, transparent cutout in seconds. No sign-up required.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#studio">Skip to the editor</a>
+
+<!-- Icon sprite -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" class="sprite">
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 15v2.5A2.5 2.5 0 0 0 6.5 20h11a2.5 2.5 0 0 0 2.5-2.5V15"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12m0 0 4.5-4.5M12 16l-4.5-4.5M4 15v2.5A2.5 2.5 0 0 0 6.5 20h11a2.5 2.5 0 0 0 2.5-2.5V15"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3v4m0 10v4M3 12h4m10 0h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 8 4.5-8 4.5-8-4.5L12 3Z"/><path d="m4 12 8 4.5 8-4.5"/><path d="m4 16.5 8 4.5 8-4.5"/></symbol>
+  <symbol id="i-compare" viewBox="0 0 24 24"><path d="M12 4v16"/><path d="M4 7h5v10H4z"/><path d="M15 7h5v10h-5z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.5 5 6v5.5c0 4 3 7.5 7 9 4-1.5 7-5 7-9V6l-7-2.5Z"/><path d="m9.5 12 1.75 1.75L15 10.5"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 5h6v6H4zM14 5h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20 4v4h-4"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.4"/><path d="m5 17 4.5-4.5 3 3L16 12l3 3"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="3" width="26" height="26" rx="8" fill="url(#bg)"/><path d="M11 20.5c1.8-6 4.2-9 7.2-9 1.9 0 3.1 1.2 3.1 2.9 0 3.3-4.4 4.9-8.4 5.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="bg" x1="3" y1="3" x2="29" y2="29"><stop stop-color="#6366F1"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs></svg>
+      </span>
+      <span class="brand-name">Clearcut</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary btn-sm header-cta" href="#studio">Try it free</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ================= HERO + STUDIO ================= -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> AI background removal</p>
+        <h1>Remove image backgrounds <em>in seconds</em></h1>
+        <p class="lede">
+          Drop in a photo and get a clean, precise cutout — hair, edges and all.
+          Keep it transparent or drop in a new colour, then download.
+        </p>
+        <ul class="trust" role="list">
+          <li>No sign-up</li>
+          <li>Free to use</li>
+          <li>Images are never stored</li>
+        </ul>
+      </div>
+
+      <!-- ============ THE APP ============ -->
+      <div class="studio" id="studio">
+        <div class="studio-notice" id="notice" role="status" hidden></div>
+
+        <!-- Empty state -->
+        <div class="dropzone" id="dropzone" data-state="idle">
+          <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp,image/heic,image/heif" multiple hidden>
+          <div class="dropzone-inner">
+            <span class="dz-icon" aria-hidden="true"><svg><use href="#i-upload"/></svg></span>
+            <h2 class="dz-title">Drop an image here</h2>
+            <p class="dz-sub">or paste from your clipboard</p>
+            <button class="btn btn-primary" type="button" id="pick-btn">Choose an image</button>
+            <p class="dz-meta">PNG, JPG, WebP or HEIC · up to 15&nbsp;MB · several at once</p>
+          </div>
+          <div class="dz-overlay" aria-hidden="true"><span>Drop to upload</span></div>
+        </div>
+
+        <!-- Editor -->
+        <div class="editor" id="editor" hidden>
+          <div class="stage-col">
+            <div class="stage" id="stage" data-compare="off">
+              <div class="stage-canvas-wrap">
+                <img class="stage-original" id="stage-original" alt="" hidden>
+                <canvas class="stage-canvas" id="stage-canvas" role="img" aria-label="Image with the background removed"></canvas>
+                <div class="compare-divider" id="compare-divider" hidden aria-hidden="true"><span></span></div>
+                <input type="range" class="compare-range" id="compare-range" min="0" max="100" value="50"
+                       aria-label="Compare original and cutout" hidden>
+              </div>
+
+              <div class="stage-status" id="stage-status" hidden>
+                <div class="spinner" aria-hidden="true"></div>
+                <p id="stage-status-text">Removing the background…</p>
+              </div>
+
+              <div class="stage-error" id="stage-error" hidden>
+                <p id="stage-error-text"></p>
+                <button class="btn btn-ghost btn-sm" type="button" id="retry-btn">
+                  <svg aria-hidden="true"><use href="#i-refresh"/></svg> Try again
+                </button>
+              </div>
+            </div>
+
+            <div class="stage-bar">
+              <button class="chip" type="button" id="compare-toggle" aria-pressed="false">
+                <svg aria-hidden="true"><use href="#i-compare"/></svg> Compare
+              </button>
+              <p class="stage-meta" id="stage-meta"></p>
+            </div>
+
+            <!-- Batch queue -->
+            <div class="queue" id="queue" hidden>
+              <ul class="queue-list" id="queue-list" role="list" aria-label="Uploaded images"></ul>
+              <button class="queue-add" type="button" id="queue-add" aria-label="Add more images">
+                <svg aria-hidden="true"><use href="#i-upload"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <aside class="panel" aria-label="Editing options">
+            <section class="panel-block">
+              <h3 class="panel-title">Background</h3>
+              <div class="swatches" id="swatches" role="radiogroup" aria-label="Background colour"></div>
+              <div class="panel-row">
+                <label class="color-field">
+                  <input type="color" id="custom-color" value="#1e293b" aria-label="Custom background colour">
+                  <span>Custom</span>
+                </label>
+                <button class="btn btn-ghost btn-sm" type="button" id="bg-image-btn">
+                  <svg aria-hidden="true"><use href="#i-image"/></svg> Image
+                </button>
+                <input type="file" id="bg-image-input" accept="image/png,image/jpeg,image/webp" hidden>
+              </div>
+            </section>
+
+            <section class="panel-block">
+              <h3 class="panel-title">Download as</h3>
+              <div class="segmented" role="radiogroup" aria-label="File format">
+                <label><input type="radio" name="format" value="png" checked><span>PNG</span></label>
+                <label><input type="radio" name="format" value="jpeg"><span>JPG</span></label>
+              </div>
+              <p class="panel-hint" id="format-hint">Transparent background, best for logos and product shots.</p>
+            </section>
+
+            <div class="panel-actions">
+              <button class="btn btn-primary btn-block" type="button" id="download-btn" disabled>
+                <svg aria-hidden="true"><use href="#i-download"/></svg> Download
+              </button>
+              <button class="btn btn-ghost btn-block btn-sm" type="button" id="download-all-btn" hidden>
+                Download all
+              </button>
+              <button class="btn btn-quiet btn-block btn-sm" type="button" id="reset-btn">Start over</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <p class="studio-footnote">
+        <svg aria-hidden="true"><use href="#i-shield"/></svg>
+        Your images are sent over an encrypted connection, processed on demand, and never saved on our servers.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= HOW ================= -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Three steps, about five seconds</h2>
+      </header>
+      <ol class="steps" role="list">
+        <li>
+          <span class="step-num">1</span>
+          <h3>Add your image</h3>
+          <p>Drag a file in, paste from the clipboard, or browse. Queue up several and work through them one by one.</p>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <h3>We cut out the subject</h3>
+          <p>An AI segmentation model separates the subject from its background, preserving fine detail like hair and fur.</p>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <h3>Style and export</h3>
+          <p>Keep the transparency or drop in a colour or backdrop, then download a PNG or a flattened JPG.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= FEATURES ================= -->
+  <section class="section section-alt" id="features">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">Features</p>
+        <h2>Everything you need, nothing you don't</h2>
+      </header>
+      <div class="cards">
+        <article class="card">
+          <span class="card-icon" aria-hidden="true"><svg><use href="#i-sparkle"/></svg></span>
+          <h3>Precise edges</h3>
+          <p>Hair, fur, glass and soft shadows stay believable instead of turning into a hard cardboard cutout.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true"><svg><use href="#i-layers"/></svg></span>
+          <h3>Instant backgrounds</h3>
+          <p>Swap colours or drop in your own backdrop as often as you like — recolouring happens in your browser, instantly.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true"><svg><use href="#i-grid"/></svg></span>
+          <h3>Batch friendly</h3>
+          <p>Drop in a whole set of product shots. Each one is processed in turn and kept in a queue you can flick between.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true"><svg><use href="#i-compare"/></svg></span>
+          <h3>Before and after</h3>
+          <p>Drag the handle across the image to check the cutout against the original before you commit to a download.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true"><svg><use href="#i-download"/></svg></span>
+          <h3>PNG or JPG</h3>
+          <p>Export a transparent PNG for design work, or a flattened JPG when you need a smaller file for the web.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true"><svg><use href="#i-shield"/></svg></span>
+          <h3>Private by design</h3>
+          <p>Processing keys live on the server and are never exposed to the browser. Your images aren't stored or logged.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section" id="faq">
+    <div class="wrap wrap-narrow">
+      <header class="section-head">
+        <p class="eyebrow">FAQ</p>
+        <h2>Good questions</h2>
+      </header>
+      <div class="faq">
+        <details>
+          <summary>Which file types can I upload?</summary>
+          <p>PNG, JPG, WebP and HEIC, up to 15&nbsp;MB per image. Very large photos are resized to 2500&nbsp;px on the longest edge before processing, which keeps things fast without a visible drop in quality.</p>
+        </details>
+        <details>
+          <summary>Do you keep my images?</summary>
+          <p>No. Images are streamed straight through to the processing API and returned to your browser. Nothing is written to disk or to a database on our side, and the cutouts you see live only in your browser tab until you close it.</p>
+        </details>
+        <details>
+          <summary>Is there a usage limit?</summary>
+          <p>There's an hourly cap per visitor so that one person can't exhaust the service for everyone else. If you hit it, the app tells you roughly how long to wait.</p>
+        </details>
+        <details>
+          <summary>Why is the background swap instant but the cutout isn't?</summary>
+          <p>Removing the background is the part that needs the AI model, so it's a round trip to the server. Once you have the cutout, everything else — colours, backdrops, format changes — is composited on a canvas in your browser, so it's immediate and doesn't use up your quota.</p>
+        </details>
+        <details>
+          <summary>Can I use the results commercially?</summary>
+          <p>The cutouts are yours. Just make sure you have the rights to the image you upload in the first place.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>Ready to cut something out?</h2>
+      <p>No account, no credit card, no watermark.</p>
+      <a class="btn btn-invert" href="#studio">Remove a background</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark small" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="3" width="26" height="26" rx="8" fill="url(#bg2)"/><path d="M11 20.5c1.8-6 4.2-9 7.2-9 1.9 0 3.1 1.2 3.1 2.9 0 3.3-4.4 4.9-8.4 5.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="bg2" x1="3" y1="3" x2="29" y2="29"><stop stop-color="#6366F1"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs></svg>
+      </span>
+      <p>Clearcut</p>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+    <p class="footer-note">Background removal powered by the Photoroom API.</p>
+  </div>
+</footer>
+
+<div class="toast-stack" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<script src="/assets/js/app.js" defer></script>
+</body>
+</html>

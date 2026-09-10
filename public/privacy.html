@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy — Clearcut</title>
+<meta name="description" content="How Clearcut handles the images you upload.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="3" width="26" height="26" rx="8" fill="url(#bg)"/><path d="M11 20.5c1.8-6 4.2-9 7.2-9 1.9 0 3.1 1.2 3.1 2.9 0 3.3-4.4 4.9-8.4 5.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="bg" x1="3" y1="3" x2="29" y2="29"><stop stop-color="#6366F1"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs></svg>
+      </span>
+      <span class="brand-name">Clearcut</span>
+    </a>
+    <a class="btn btn-ghost btn-sm" href="/" style="margin-left:auto">Back to the app</a>
+  </div>
+</header>
+
+<main class="prose">
+  <div class="wrap wrap-narrow">
+    <h1>Privacy</h1>
+    <p class="updated">Last updated 10 September 2026</p>
+
+    <p>Clearcut is a background-removal tool. This page explains, in plain terms, what happens to an image when you use it.</p>
+
+    <h2>What happens to your images</h2>
+    <ul>
+      <li>Your browser sends the image over an encrypted (HTTPS) connection to a serverless function running on Netlify.</li>
+      <li>That function forwards it to the Photoroom image API, which performs the background removal, and streams the result straight back to your browser.</li>
+      <li>Nothing is written to a disk, a database or an object store on our side. Once the response has been returned, no copy remains with us.</li>
+      <li>The cutout, the queue and any backdrop you apply live only in your browser tab. Closing or reloading the tab discards them.</li>
+      <li>Photoroom processes the image as our sub-processor. Their handling is governed by their own policy at <a href="https://www.photoroom.com/privacy" rel="noopener noreferrer">photoroom.com/privacy</a>.</li>
+    </ul>
+
+    <h2>What we log</h2>
+    <p>Netlify records standard request logs (timestamp, response status, and similar operational data) for the site and its functions. If a request fails, we log the error so the problem can be diagnosed — this never includes your image.</p>
+    <p>To keep the service usable for everyone, there is an hourly request cap per visitor. It is enforced against a salted, one-way hash of your IP address, so the stored value cannot be turned back into an address. These counters expire on a rolling one-hour window.</p>
+
+    <h2>Cookies and tracking</h2>
+    <p>Clearcut sets no cookies, uses no analytics, and loads no third-party scripts, fonts or trackers. There is nothing to opt out of.</p>
+
+    <h2>Credentials</h2>
+    <p>The API credentials used to reach the processing service are stored as encrypted environment variables on the server and are read only inside the serverless function. They are never sent to your browser, never appear in the page source, and never appear in any API response.</p>
+
+    <h2>Your images belong to you</h2>
+    <p>We claim no rights over anything you upload or download. Please only upload images you have the right to use.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this page can be raised through the repository this site is deployed from.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand"><p>Clearcut</p></div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/#faq">FAQ</a>
+    </nav>
+    <p class="footer-note">Background removal powered by the Photoroom API.</p>
+  </div>
+</footer>
+
+</body>
+</html>
