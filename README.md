@@ -25,6 +25,31 @@ Abuse protections that keep the key's quota from being drained:
 - **Upload validation** — MIME allow-list and a 15 MB ceiling, checked before any upstream call is made.
 - **Timeout** — outbound requests are aborted after 25 s.
 
+## Deploying
+
+The Netlify project **`clearcut-bg-remover-0w40`** already exists, with the keys
+stored as secret environment variables. To put the site live, link this
+repository to it once and Netlify builds it on every push:
+
+1. Netlify → **clearcut-bg-remover-0w40** → *Project configuration → Build & deploy → Continuous deployment* → **Link repository**.
+2. Choose `Fadi-yt1/bck`.
+3. Set the production branch to `claude/ecstatic-archimedes-h92hgh` (or merge that branch into `main` and use `main`).
+4. Leave the build settings as detected — `netlify.toml` supplies the publish
+   directory, the functions directory and the headers.
+
+After the first deploy, confirm the credentials are wired up by opening
+`/api/status`. It should return:
+
+```json
+{"ready":true,"mode":"live","maxUploadBytes":15728640,"rateLimitPerHour":40}
+```
+
+`ready:false` means the function can't see `PHOTOROOM_API_KEY` — check that the
+variable is scoped to **Functions** in the Netlify UI.
+
+Note: if the Netlify team requires SSO login for all projects, the site stays
+private to the team until that is changed for this project.
+
 ## Environment variables
 
 Set these in **Netlify → Site configuration → Environment variables** (mark the keys as secret):
