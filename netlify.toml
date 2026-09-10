@@ -31,10 +31,13 @@
     # Everything is first-party: no external scripts, styles, fonts or beacons.
     Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
 
+# Assets are not content-hashed, so they must revalidate on every load.
+# A stale app.js can outlive a deploy and disagree with the API it talks to.
+# ETags make this a 304 in practice, not a re-download.
 [[headers]]
   for = "/assets/*"
   [headers.values]
-    Cache-Control = "public, max-age=3600, must-revalidate"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/*.html"
