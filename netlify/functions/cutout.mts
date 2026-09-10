@@ -121,17 +121,18 @@ export default async (req: Request, context: Context): Promise<Response> => {
     return fail("forbidden_origin", "This endpoint only serves requests from Clearcut.", 403);
   }
 
+  // Sandbox mode must never silently fall back to the live key: the UI tells
+  // visitors that sandbox results cost no credits, and spending real credits
+  // behind that promise would be worse than refusing the request.
   const mode = (Netlify.env.get("PHOTOROOM_MODE") ?? "live").toLowerCase();
-  const apiKey =
-    mode === "sandbox"
-      ? Netlify.env.get("PHOTOROOM_SANDBOX_API_KEY") ?? Netlify.env.get("PHOTOROOM_API_KEY")
-      : Netlify.env.get("PHOTOROOM_API_KEY");
+  const requiredKey = mode === "sandbox" ? "PHOTOROOM_SANDBOX_API_KEY" : "PHOTOROOM_API_KEY";
+  const apiKey = Netlify.env.get(requiredKey);
 
   if (!apiKey) {
-    console.error("Photoroom credentials are not configured for mode:", mode);
+    console.error(`Photoroom credentials missing: ${requiredKey} is not set (mode: ${mode})`);
     return fail(
       "not_configured",
-      "The background removal service is not configured yet. Please try again later.",
+      `Background removal isn't configured: the server is missing ${requiredKey}.`,
       503,
     );
   }
@@ -245,7 +246,7 @@ export default async (req: Request, context: Context): Promise<Response> => {
       case 402:
         return fail(
           "out_of_credits",
-          "The image processing quota has run out. Please try again later.",
+          "Image processing is unavailable: the Photoroom account is out of credits.",
           503,
         );
       case 429:

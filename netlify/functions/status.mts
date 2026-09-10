@@ -13,9 +13,9 @@ export default async (): Promise<Response> => {
   const mode = (Netlify.env.get("PHOTOROOM_MODE") ?? "live").toLowerCase();
   const sandbox = mode === "sandbox";
 
-  const liveKey = Netlify.env.get("PHOTOROOM_API_KEY");
-  const sandboxKey = Netlify.env.get("PHOTOROOM_SANDBOX_API_KEY");
-  const activeKey = sandbox ? sandboxKey ?? liveKey : liveKey;
+  // Mirrors cutout.mts: sandbox mode requires the sandbox key, with no
+  // fall-through to the live key.
+  const activeKey = Netlify.env.get(sandbox ? "PHOTOROOM_SANDBOX_API_KEY" : "PHOTOROOM_API_KEY");
 
   const missing: string[] = [];
   if (!activeKey) {
