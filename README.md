@@ -72,6 +72,15 @@ Set these in **Netlify → Site configuration → Environment variables** (mark 
 Switching between the live and sandbox key is a change to `PHOTOROOM_MODE` and a
 redeploy — no code change.
 
+Each mode requires its own key and will **not** fall back to the other one. If
+`PHOTOROOM_MODE=sandbox` and `PHOTOROOM_SANDBOX_API_KEY` is unset, the function
+refuses the request and names the missing variable rather than quietly spending
+live credits behind the "no credits are used" notice.
+
+Environment variable changes only reach the functions on the **next deploy**, so
+after editing one, trigger a redeploy (any push to the production branch does it,
+or *Deploys → Trigger deploy* in the Netlify UI).
+
 ## Project layout
 
 ```
