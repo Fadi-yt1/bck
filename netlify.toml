@@ -13,7 +13,7 @@
 
 [dev]
   publish = "public"
-  targetPort = 8888
+  framework = "#static"
 
 # ---------------------------------------------------------------------------
 # Security headers
